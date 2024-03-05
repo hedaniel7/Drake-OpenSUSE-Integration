@@ -1,0 +1,11 @@
+# Bazel build directories
+bazel-*
+bazel_out/
+
+# Temporary files
+*.tmp
+*.log
+
+# System files
+.DS_Store
+
