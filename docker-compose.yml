@@ -1,11 +1,20 @@
 version: '3.8'
 services:
+  # drake-opensuse-base:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.base
+  #   image: drake-opensuse-base:latest
+  #   container_name: drake_opensuse_integration_base
+  #   stdin_open: true
+  #   tty: true
   drake-opensuse:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: drake-opensuse:latest
     container_name: drake_opensuse_integration
     volumes:
-      - ./drake:/drake # Assumes your Drake project is in the './drake' directory
-    stdin_open: true # Keeps the container running and allows interactive sessions
-    tty: true # Allocates a pseudo-TTY, making it possible to interact with the container
-
+      - ./drake:/home/dan/drake # Map the Drake project directory to 'dan's home directory in the container
+    stdin_open: true
+    tty: true
