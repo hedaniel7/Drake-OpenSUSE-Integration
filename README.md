@@ -14,9 +14,12 @@
 - Fixed native python version 3.6 with Pyenv 3.10
 
 #### Problem with mumps
-#### https://stackoverflow.com/questions/78114963/integration-of-drake-to-opensuse-error-in-external-mumps-internal-build-bazel
+- https://stackoverflow.com/questions/78114963/integration-of-drake-to-opensuse-error-in-external-mumps-internal-build-bazel
 
-### Changed ownership of the drake folder to docker  container's user and group id for smoother operation in docker container
+
+### Docker stuff
+
+#### Changed ownership of the drake folder to docker  container's user and group id for smoother operation in docker container
 
 
 #### Before change
