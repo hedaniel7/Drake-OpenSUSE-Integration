@@ -6,6 +6,16 @@
 - `docker-compose run drake-opensuse`
 - (After usage) `docker-compose down --remove-orphans`
 
+### Documentation
+
+- Fixed gcc-fortran nasm by just installing it with Zypper
+- Fixed lapack and blas by adding made up .pc files
+- Fixed fmt, spdlog by building from source from GitHub repositories
+- Fixed native python version 3.6 with Pyenv 3.10
+
+#### Problem with mumps
+#### https://stackoverflow.com/questions/78114963/integration-of-drake-to-opensuse-error-in-external-mumps-internal-build-bazel
+
 ### Changed ownership of the drake folder to docker  container's user and group id for smoother operation in docker container
 
 
