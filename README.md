@@ -1,7 +1,10 @@
 # Drake-OpenSUSE-Integration
 
-docker-compose build --no-cache
-docker-compose run drake-opensuse 
+### Usage
+
+- `docker-compose build --no-cache`
+- `docker-compose run drake-opensuse`
+- (After usage) `docker-compose down --remove-orphans`
 
 ### Changed ownership of the drake folder to docker  container's user and group id for smoother operation in docker container
 
@@ -29,3 +32,4 @@ drwxrwxr-x 23 499 486 4096 Mär  5 11:20 drake
 - I configured git accordingly
 
 `git config --global --add safe.directory /home/dan/Projects/Drake-OpenSUSE-Integration/drake`
+
