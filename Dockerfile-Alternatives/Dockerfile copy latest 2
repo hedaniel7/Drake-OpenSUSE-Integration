@@ -8,11 +8,17 @@ RUN zypper --non-interactive update && \
     pkg-config python3-devel python3-pygame zlib-devel pkg-config libfmt8 eigen3-devel \
     libmumps5 mumps-devel gcc-fortran nasm 
 
-# Add the repository for newer GCC versions, install GCC 9, and set it as default
-RUN zypper addrepo -f http://download.opensuse.org/repositories/devel:/gcc/openSUSE_Leap_15.3/ devel_gcc && \
+# Add the repository for GCC 10
+RUN zypper addrepo -f http://download.opensuse.org/repositories/devel:/gcc/openSUSE_Leap_15.4/ devel_gcc && \
     zypper --non-interactive --gpg-auto-import-keys refresh && \
-    zypper --non-interactive install -y gcc9 gcc9-c++ && \
-    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 90 --slave /usr/bin/g++ g++ /usr/bin/g++-9
+    zypper --non-interactive install -y gcc10 gcc10-c++
+
+# Set GCC 10 as the default compiler
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 100 --slave /usr/bin/g++ g++ /usr/bin/g++-10 && \
+    update-alternatives --install /usr/bin/cc cc /usr/bin/gcc 30 && \
+    update-alternatives --set cc /usr/bin/gcc && \
+    update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++ 30 && \
+    update-alternatives --set c++ /usr/bin/g++
 
 # Clone, build, and install fmt and spdlog from source
 RUN cd /tmp && \
@@ -55,8 +61,8 @@ RUN git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv && \
     /bin/bash -c "source $HOME/.bashrc && pyenv install 3.10.0 && pyenv global 3.10.0"
 
 # Set environment variables for GCC to ensure Bazel uses the correct version
-ENV CC=/usr/bin/gcc-9
-ENV CXX=/usr/bin/g++-9
+ENV CC=/usr/bin/gcc-10
+ENV CXX=/usr/bin/g++-10
 ENV PYENV_ROOT $HOME/.pyenv
 ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 
