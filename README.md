@@ -2,24 +2,39 @@
 
 ### Usage
 
+- (`sudo chown -R 499:486 drake`) (you may have to change this, see below)
 - `docker-compose build --no-cache`
 - `docker-compose run drake-opensuse`
 - (After usage) `docker-compose down --remove-orphans`
 
 ### Documentation
 
-- Fixed gcc-fortran nasm by just installing it with Zypper
-- Fixed lapack and blas by adding made up .pc files
-- Fixed fmt, spdlog by building from source from GitHub repositories
-- Fixed native python version 3.6 with Pyenv 3.10
 
-#### Problem with mumps
+- fixed ownership issues with git-folder drake (see below)
+- fixed gcc-fortran nasm by just installing it with Zypper
+- fixed lapack and blas by adding made up .pc files
+- fixed fmt, spdlog by building from source from GitHub repositories
+- fixed native python version 3.6 with Pyenv 3.10
+
+#### Problem with mumps - fixed
 - https://stackoverflow.com/questions/78114963/integration-of-drake-to-opensuse-error-in-external-mumps-internal-build-bazel
+
+-> In `tools/workspace/mumps_internal/repository.bzl` I changed
+`repo_ctx.symlink("/usr/include/mumps/" + hdr, "include/" + hdr) # Changed this for OpenSUSE integration`
+
+- fixed gcc problem by installing gcc 10
+- fixed /usr/share/java/jchart2d.jar file issue by downloading it with wget
+- fixed missing PyYAML by installing it
+- fixed missing llvm-clang packages by just installing it with Zypper
+
+
+####  Problem with spdlog and fmt 
+https://stackoverflow.com/questions/78122252/integration-of-drake-to-opensuse-build-error-with-spdlog-and-fmt
 
 
 ### Docker stuff
 
-#### Changed ownership of the drake folder to docker  container's user and group id for smoother operation in docker container
+#### Changed ownership of the drake folder to docker container's user and group id for smoother operation in docker container
 
 
 #### Before change
