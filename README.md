@@ -28,9 +28,10 @@
 - fixed missing llvm-clang packages by just installing it with Zypper
 
 
-####  Problem with spdlog and fmt 
+####  Problem with spdlog and fmt - (seems to be fixed - might resurface)
 https://stackoverflow.com/questions/78122252/integration-of-drake-to-opensuse-build-error-with-spdlog-and-fmt
 
+- RuntimeError: Library file /usr/lib/x86_64-linux-gnu/libclang-14.so does NOT exist
 
 ### Docker stuff
 
