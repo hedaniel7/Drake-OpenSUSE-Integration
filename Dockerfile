@@ -6,7 +6,9 @@ RUN zypper --non-interactive update && \
     zypper --non-interactive install -y vim sudo git cmake make java-1_8_0-openjdk-devel \
     glib2-devel lapack-devel libX11-devel ocl-icd-devel opencl-headers patch patchelf \
     pkg-config python3-devel python3-pygame zlib-devel pkg-config eigen3-devel \
-    libmumps5 mumps-devel gcc-fortran nasm wget llvm-clang llvm-clang-devel
+    libmumps5 mumps-devel gcc-fortran nasm wget\  
+    spdlog-devel  # spdlog-devel install spdlog-devel and fmt-devel
+    # llvm-clang llvm-clang-devel not installed as there are too old
 
 # Add the repository for GCC 10
 RUN zypper addrepo -f http://download.opensuse.org/repositories/devel:/gcc/openSUSE_Leap_15.4/ devel_gcc && \
@@ -19,14 +21,6 @@ RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 100 --slave /
     update-alternatives --set cc /usr/bin/gcc && \
     update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++ 30 && \
     update-alternatives --set c++ /usr/bin/g++
-
-# Clone, build, and install fmt and spdlog from source
-RUN cd /tmp && \
-    git clone https://github.com/fmtlib/fmt.git && \
-    cd fmt && mkdir build && cd build && cmake .. && make install && \
-    cd /tmp && \
-    git clone https://github.com/gabime/spdlog.git && \
-    cd spdlog && mkdir build && cd build && cmake .. && make install
 
 # Install Bazelisk
 RUN curl -L https://github.com/bazelbuild/bazelisk/releases/download/v1.7.5/bazelisk-linux-amd64 > /usr/local/bin/bazelisk && \
@@ -47,14 +41,13 @@ RUN groupadd -r dan && \
     chown -R dan:dan /home/dan/drake && \
     echo "dan ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-# Switch to user 'dan' before installing pyenv and Python
 USER dan
 ENV HOME /home/dan
 WORKDIR $HOME
 
 # Install dependencies for pyenv and Python build
-RUN sudo zypper --non-interactive install -y git gcc make zlib-devel libbz2-devel libopenssl-devel readline-devel sqlite3-devel tar gzip
-
+RUN sudo zypper --non-interactive install -y git gcc make zlib-devel libbz2-devel libopenssl-devel readline-devel \
+    sqlite3-devel tar gzip openmpi-devel python3-clang15 clang15-devel
 
 # Install pyenv and Python 3.10
 RUN git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv && \
@@ -71,4 +64,4 @@ ENV CC=/usr/bin/gcc-10
 ENV CXX=/usr/bin/g++-10
 ENV PYENV_ROOT $HOME/.pyenv
 ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
-
+ENV LD_LIBRARY_PATH=/usr/lib/llvm-14/lib:$LD_LIBRARY_PATH
