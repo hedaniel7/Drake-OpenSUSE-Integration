@@ -9,10 +9,12 @@ services:
   #   stdin_open: true
   #   tty: true
   drake-opensuse:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: drake-opensuse:latest
+    #build:
+    #  context: .
+    #  dockerfile: Dockerfile
+    #image: drake-opensuse-integration-fmt-10.0.0-spdlog-1.12-built:latest
+    #image: drake-opensuse-integration-fmt-10.0.0-spdlog-1.12.0-drake-build:latest
+    image: drake-opensuse-integration-fmt-8.1.1-spdlog-1.10-built-fpie-long-drake-build:latest
     container_name: drake_opensuse_integration
     volumes:
       - /home/dan/Projects/Drake-OpenSUSE-Integration/drake:/home/dan/drake # Map the Drake project directory to 'dan's home directory in the container

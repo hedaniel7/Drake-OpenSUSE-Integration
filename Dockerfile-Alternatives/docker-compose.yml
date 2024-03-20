@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  drake-opensuse:
+    # This is a docker-compose file to run a docker pulled image that I uploaded, for example 
+    image: danielhe7/drake-opensuse-integration:fmt-8.1.1-spdlog-1.10 # comment out if this is the one you're trying to use
+    container_name: drake_opensuse_integration
+    volumes:
+    # You have to set these
+      - /path/to/Drake-OpenSUSE-Integration/drake:/home/dan/drake # Map the Drake project directory to 'dan's home directory in the container
+    stdin_open: true
+    tty: true
+
+# Usage:
+# Navigate to the DockerHub subfolder and then run
+# docker-compose run drake-opensuse 
